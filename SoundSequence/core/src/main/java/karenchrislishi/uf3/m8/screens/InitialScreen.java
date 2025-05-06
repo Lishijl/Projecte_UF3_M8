@@ -67,7 +67,7 @@ public class InitialScreen implements Screen {
 
         // Ponemos el texto al botón
         startButton = new TextButton("START", buttonStyle);
-        startButton.setSize(550, 180);
+        startButton.setSize(500, 170);
 
         // Botón START: redirigirá al GameScreen y pasará el nombre del usuario
         startButton.addListener(new ClickListener() {
@@ -120,8 +120,8 @@ public class InitialScreen implements Screen {
         float stageHeight = stage.getViewport().getWorldHeight();
 
         // Se centran los elementos y se ajusta un poco la altura
-        textField.setPosition((stageWidth - textField.getWidth()) / 2, (stageHeight * 0.6f) - 70);
-        startButton.setPosition((stageWidth - startButton.getWidth()) / 2, (stageHeight * 0.45f) - 220);
+        textField.setPosition((stageWidth - textField.getWidth()) / 2, (stageHeight * 0.6f) - 300);
+        startButton.setPosition((stageWidth - startButton.getWidth()) / 2, (stageHeight * 0.45f) - 400);
     }
 
 
