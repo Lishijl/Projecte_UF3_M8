@@ -14,7 +14,7 @@ public class AssetManager {
 
     public static void load() {
         // Fons pantalla inicio
-        initialBackground = new Texture(Gdx.files.internal("imatges/background.png"));
+        initialBackground = new Texture(Gdx.files.internal("imatges/initialBackground.png"));
 
         // Música pantalla inicio
         musica = Gdx.audio.newMusic(Gdx.files.internal("sounds/musica_fondo.mp3"));
