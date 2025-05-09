@@ -14,19 +14,21 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import karenchrislishi.uf3.m8.SoundSequence;
+
 
 public class GameOver implements Screen {
 
 
-    private final Game game;
+    private final SoundSequence sndSq;
     private Stage stage;
     private BitmapFont font;
     private int scoreReached;
     private com.badlogic.gdx.audio.Sound gameOverSound;
 
 
-    public GameOver(Game game) {
-        this.game = game;
+    public GameOver(SoundSequence sndSq) {
+        this.sndSq = sndSq;
         this.scoreReached = scoreReached;
 
 
@@ -97,7 +99,7 @@ public class GameOver implements Screen {
         menuButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new InitialScreen(game));
+                sndSq.setScreen(new InitialScreen(sndSq));
             }
         });
 

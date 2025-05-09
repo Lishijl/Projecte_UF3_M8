@@ -15,17 +15,34 @@ import karenchrislishi.uf3.m8.screens.InitialScreen;
 public class SoundSequence extends Game {
     @Override
     public void create() {
+        Gdx.app.log("LifeCycle", "create()");
         AssetManager.load();
         setScreen(new InitialScreen(this));
     }
-
+    @Override
+    public void resize(int width, int height) {
+        super.resize(width, height);
+        Gdx.app.log("LifeCycle", "resize(" + Integer.toString(width) + ", " +
+            Integer.toString(height) + ")");
+    }
     @Override
     public void render() {
         super.render();
     }
-
+    @Override
+    public void pause() {
+        super.pause();
+        Gdx.app.log("LifeCycle", "pause()");
+    }
+    @Override
+    public void resume() {
+        super.resume();
+        Gdx.app.log("LifeCycle", "resume()");
+    }
     @Override
     public void dispose() {
+        super.dispose();
         AssetManager.dispose();
+        Gdx.app.log("LifeCycle", "dispose()");
     }
 }

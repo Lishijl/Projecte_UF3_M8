@@ -17,24 +17,23 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 
+import karenchrislishi.uf3.m8.SoundSequence;
 import karenchrislishi.uf3.m8.helpers.AssetManager;
 
 public class InitialScreen implements Screen {
-    private final Game game;
     private final Stage stage;
     private final Batch batch;
+    private final SoundSequence sndSq;
+
     private final OrthographicCamera camera;
-
     private Skin skin;
-
     private Texture background;
 
     private TextField textField;
     private TextButton startButton;
 
-    public InitialScreen(Game game) {
-        this.game = game;
-
+    public InitialScreen(SoundSequence sndSq) {
+        this.sndSq = sndSq;
         background = AssetManager.initialBackground;
 
         int width = Gdx.graphics.getWidth();
@@ -75,7 +74,7 @@ public class InitialScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 String nombre = textField.getText().trim();
                 if (!nombre.isEmpty()) {
-                    game.setScreen(new GameScreen(game, nombre));
+                    sndSq.setScreen(new GameScreen(batch, viewport, nombre));
                 }
             }
         });
