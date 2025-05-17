@@ -29,14 +29,14 @@ public class AssetManager {
         musica = Gdx.audio.newMusic(Gdx.files.internal("sounds/musica_fondo.mp3"));
         musica.setLooping(true);
 
-        btn1purpleOn = new Texture("imatges/purple_1_on.ong");
-        btn2greenOn = new Texture("imatges/green_2_on.ong");
-        btn3blueOn = new Texture("imatges/blue_3_on.ong");
-        btn4yellowOn = new Texture("imatges/yellow_4_on.ong");
-        btn1purpleOff = new Texture("imatges/purple_1_off.ong");
-        btn2greenOff = new Texture("imatges/green_2_off.ong");
-        btn3blueOff = new Texture("imatges/blue_3_off.ong");
-        btn4yellowOff = new Texture("imatges/yellow_4_off.ong");
+        btn1purpleOn = new Texture("imatges/purple_1_on.png");
+        btn2greenOn = new Texture("imatges/green_2_on.png");
+        btn3blueOn = new Texture("imatges/blue_3_on.png");
+        btn4yellowOn = new Texture("imatges/yellow_4_on.png");
+        btn1purpleOff = new Texture("imatges/purple_1_off.png");
+        btn2greenOff = new Texture("imatges/green_2_off.png");
+        btn3blueOff = new Texture("imatges/blue_3_off.png");
+        btn4yellowOff = new Texture("imatges/yellow_4_off.png");
 
         snd1 = Gdx.audio.newSound(Gdx.files.internal("sounds/sound1_purple.mp3"));
         snd2 = Gdx.audio.newSound(Gdx.files.internal("sounds/sound2_green.mp3"));
