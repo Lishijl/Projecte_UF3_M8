@@ -6,7 +6,6 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class AssetManager {
 
@@ -45,7 +44,7 @@ public class AssetManager {
 
         FileHandle fontFile = Gdx.files.internal("skin/default.fnt");
         font = new BitmapFont(fontFile, true);
-        font.getData().setScale(0.6f);
+        font.getData().setScale(6f);
 
     }
 

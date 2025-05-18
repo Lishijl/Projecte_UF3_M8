@@ -74,6 +74,7 @@ public class InitialScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 String nombre = textField.getText().trim();
                 if (!nombre.isEmpty()) {
+                    AssetManager.musica.stop();
                     sndSq.setScreen(new GameScreen(batch, viewport, nombre));
                 }
             }

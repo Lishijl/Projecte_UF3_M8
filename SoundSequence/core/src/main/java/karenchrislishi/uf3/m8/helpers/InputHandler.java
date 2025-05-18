@@ -1,119 +1,137 @@
-package karenchrislishi.uf3.m8.helpers;
+    package karenchrislishi.uf3.m8.helpers;
 
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+    import com.badlogic.gdx.Gdx;
+    import com.badlogic.gdx.Input;
+    import com.badlogic.gdx.InputProcessor;
+    import com.badlogic.gdx.math.Vector2;
+    import com.badlogic.gdx.scenes.scene2d.Actor;
+    import com.badlogic.gdx.scenes.scene2d.Stage;
 
-import karenchrislishi.uf3.m8.actors.Button;
-import karenchrislishi.uf3.m8.screens.GameScreen;
+    import karenchrislishi.uf3.m8.actors.Button;
+    import karenchrislishi.uf3.m8.screens.GameScreen;
 
-public class InputHandler implements InputProcessor {
+    public class InputHandler implements InputProcessor {
 
-    //private final Button btn1on, btn2on, btn3on, btn4on, btn1off, btn2off, btn3off, btn4off;
-    private final Button[] btnsOn;
-    private final Button[] btnsOff;
-    private final GameScreen screen;
-    private final Stage stage;
-    private Vector2 stageCoord;
+        private final Button[] btnsOn;
+        private final Button[] btnsOff;
+        private final GameScreen screen;
+        private final Stage stage;
+        private Vector2 coor;
 
-    /* TO-DO tant el clicable per Device com per Keyboard
-    * */
-    public InputHandler(GameScreen screen) {
-        this.screen = screen;
-        this.stage = screen.getStage();
-        this.btnsOn = screen.getBtnsOn();
-        this.btnsOff = screen.getBtnsOff();
-        /*
-        this.btn1on = screen.getBtn1on();
-        this.btn2on = screen.getBtn2on();
-        this.btn3on = screen.getBtn3on();
-        this.btn4on = screen.getBtn4on();
-        this.btn1off = screen.getBtn1off();
-        this.btn2off = screen.getBtn2off();
-        this.btn3off = screen.getBtn3off();
-        this.btn4off = screen.getBtn4off();
-         */
-    }
-    @Override
-    public boolean keyDown(int keycode) {
-        switch (screen.getEstatJoc()) {
-            case RUNNING:
-                switch (keycode) {
-                    case Input.Keys.LEFT:
-                        btnsOn[0].blink(1.0f);
-                        break;
-                    case Input.Keys.UP:
-                        btnsOn[1].blink(1.0f);
-                        break;
-                    case Input.Keys.DOWN:
-                        btnsOn[2].blink(1.0f);
-                        break;
-                    case Input.Keys.RIGHT:
-                        btnsOn[3].blink(1.0f);
-                        break;
-                }
-            case GAMEOVER:
-                screen.reset();
-                break;
+        public InputHandler(GameScreen screen) {
+            this.screen = screen;
+            this.stage = screen.getStage();
+            this.btnsOn = screen.getBtnsOn();
+            this.btnsOff = screen.getBtnsOff();
         }
-        return true;
-    }
+        @Override
+        public boolean keyDown(int keycode) {
+            switch (screen.getEstatJoc()) {
+                case RUNNING:
+                    int clicIndex = -1;
+                    switch (keycode) {
+                        case Input.Keys.LEFT:
+                            clicIndex = 1;
+                            break;
+                        case Input.Keys.UP:
+                            clicIndex = 3;
+                            break;
+                        case Input.Keys.DOWN:
+                            clicIndex = 0;
+                            break;
+                        case Input.Keys.RIGHT:
+                            clicIndex = 2;
+                            break;
+                    }
+                    if (clicIndex != -1) {
+                        handleInput(clicIndex);
+                    }
+                    break;
+                case GAMEOVER:
+                    screen.reset();
+                    AssetManager.musica.stop();
+                    break;
+            }
+            return true;
+        }
 
-    @Override
-    public boolean keyUp(int keycode) {
-        return false;
-    }
+        @Override
+        public boolean keyUp(int keycode) {
+            return false;
+        }
 
-    @Override
-    public boolean keyTyped(char character) {
-        return false;
-    }
+        @Override
+        public boolean keyTyped(char character) {
+            return false;
+        }
+        private void handleInput(int clicIndex) {
+            if (!screen.isWaitUser()) return;
+            // Haz que el botón parpadee
+            btnsOn[clicIndex].blink(0.1f);
+            // quan es toca un dinamic, verifica index
+            int[] patro = screen.getPatronOri();
+            int index = screen.getIndexActual();
+            // en el for si i actual coincideix amb el que hi ha a patro sequencialment
+            if (clicIndex == patro[index]) {
+                // pasa al seguent patró
+                screen.setIndexActual(index + 1);
+                // comprobar si no estoy al final del patron
+                if (patro.length == screen.getIndexActual()) {
+                    // guanya nivell
+                    screen.nextLvl();
+                }
+            } else {
+                screen.setEstatJoc(GameScreen.GameState.GAMEOVER);
+                AssetManager.musica.play();
+                screen.setWaitUser(false);
+            }
+            Gdx.app.log("GameScreen", "Patrón introducido: " + clicIndex);
+        }
 
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        switch (screen.getEstatJoc()) {
-            case RUNNING:
-                stageCoord = stage.screenToStageCoordinates(new Vector2(screenX, screenY));
-                for (Actor act : stage.getActors()) {
-                    if (act instanceof Button) {
-                        Button btn = (Button) act;
-                        if (btn.getRectArea().contains(stageCoord)) {
-                            btn.blink(1.0f);
+        @Override
+        public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+            coor = stage.screenToStageCoordinates(new Vector2(screenX, screenY));
+            switch (screen.getEstatJoc()) {
+                case RUNNING:
+                    if (!screen.isWaitUser()) return false;
+                    for (int i = 0; i < btnsOn.length; i++) {
+                        // si algun dels botons on coincideix en el tocat
+                        if (btnsOn[i].getRectArea().contains(coor)) {
+                            handleInput(i);
                             break;
                         }
                     }
-                }
-            case GAMEOVER:
-                screen.reset();
-                break;
+                    break;
+                case GAMEOVER:
+                    screen.reset();
+                    AssetManager.musica.stop();
+                    break;
+            }
+            return true;
         }
-        return true;
-    }
 
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
+        @Override
+        public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+            return false;
+        }
 
-    @Override
-    public boolean touchCancelled(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
+        @Override
+        public boolean touchCancelled(int screenX, int screenY, int pointer, int button) {
+            return false;
+        }
 
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        return false;
-    }
+        @Override
+        public boolean touchDragged(int screenX, int screenY, int pointer) {
+            return false;
+        }
 
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        return false;
-    }
+        @Override
+        public boolean mouseMoved(int screenX, int screenY) {
+            return false;
+        }
 
-    @Override
-    public boolean scrolled(float amountX, float amountY) {
-        return false;
+        @Override
+        public boolean scrolled(float amountX, float amountY) {
+            return false;
+        }
     }
-}
