@@ -151,7 +151,7 @@ public class GameScreen implements Screen {
     public void reset() {
         statJoc = GameState.RUNNING;
         lvl = 1;
-        lvlTxt.setText(AssetManager.font, "Score: " + lvl);
+        lvlTxt.setText(AssetManager.font, "LVL: " + lvl);
     }
     @Override
     public void resize(int width, int height) {}
