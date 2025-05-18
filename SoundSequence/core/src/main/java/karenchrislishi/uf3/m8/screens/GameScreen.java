@@ -24,7 +24,7 @@ public class GameScreen implements Screen {
     private Button[] btnsOn;
     private Button[] btnsOff;
     private Batch batch;
-    private GlyphLayout scoreTxt;
+    private GlyphLayout lvlTxt;
     private GameState statJoc;
     private float with, height;
     private int lvl;
@@ -68,9 +68,9 @@ public class GameScreen implements Screen {
         btnsOn[1].setName("gOn");
         btnsOn[2].setName("bOn");
         btnsOn[3].setName("yOn");
-        scoreTxt = new GlyphLayout();
+        lvlTxt = new GlyphLayout();
         lvl = 1;
-        scoreTxt.setText(AssetManager.font, "SCORE: " + lvl);
+        lvlTxt.setText(AssetManager.font, "LVL: " + lvl);
         Gdx.input.setInputProcessor(new InputHandler(this));
         statJoc = GameState.RUNNING;
         waitUser = false;
@@ -94,7 +94,7 @@ public class GameScreen implements Screen {
     // desenvolupament de la jugabilitat
     public void running(float delta) {
         batch.begin();
-        AssetManager.font.draw(batch, scoreTxt, with/1.25f, height/1.25f);
+        AssetManager.font.draw(batch, lvlTxt, with/1.25f, height/1.25f);
         batch.end();
         if (!waitUser) {
             patroNivell(lvl);
@@ -129,7 +129,7 @@ public class GameScreen implements Screen {
     }
     public void nextLvl() {
         lvl++;
-        scoreTxt.setText(AssetManager.font, "SCORE: " + lvl);
+        lvlTxt.setText(AssetManager.font, "LVL: " + lvl);
         waitUser = false;
         // reinicio indexPatro
         indexActual = 0;
@@ -151,7 +151,7 @@ public class GameScreen implements Screen {
     public void reset() {
         statJoc = GameState.RUNNING;
         lvl = 1;
-        scoreTxt.setText(AssetManager.font, "Score: " + lvl);
+        lvlTxt.setText(AssetManager.font, "Score: " + lvl);
     }
     @Override
     public void resize(int width, int height) {}
