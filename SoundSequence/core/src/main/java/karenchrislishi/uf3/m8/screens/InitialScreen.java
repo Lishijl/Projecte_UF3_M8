@@ -54,9 +54,11 @@ public class InitialScreen implements Screen {
         // Campo de texto
         textField = new TextField("", skin);
         textField.setMessageText("Introduce tu nombre");
-        textField.setHeight(150);
+        textField.setHeight(180);
         textField.setWidth(1100);
         textField.setAlignment(Align.center);
+        //textField.setPosition((width - textField.getWidth()) / 2, (height * 0.6f) - 100);
+
 
         // Elegimos el estilo que tendrá el botón + texto
         TextButton.TextButtonStyle buttonStyle = new TextButton.TextButtonStyle();
@@ -120,8 +122,8 @@ public class InitialScreen implements Screen {
         float stageHeight = stage.getViewport().getWorldHeight();
 
         // Se centran los elementos y se ajusta un poco la altura
-        textField.setPosition((stageWidth - textField.getWidth()) / 2, (stageHeight * 0.6f) - 300);
-        startButton.setPosition((stageWidth - startButton.getWidth()) / 2, (stageHeight * 0.45f) - 400);
+        textField.setPosition((stageWidth - textField.getWidth()) / 2, (stageHeight * 0.6f) - 60);
+        startButton.setPosition((stageWidth - startButton.getWidth()) / 2, (stageHeight * 0.45f) - 220);
     }
 
 
